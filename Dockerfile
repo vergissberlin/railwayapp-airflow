@@ -1,4 +1,4 @@
-FROM apache/airflow:2.10.5-python3.12
+FROM apache/airflow:2.11.2-python3.12
 
 COPY --chmod=0755 docker-entrypoint.sh /opt/airflow/railway-entrypoint.sh
 
