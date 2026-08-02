@@ -33,9 +33,10 @@ Hosting Airflow means running the webserver, scheduler, and—depending on your 
 
 **Files in this template**
 
-- `Dockerfile` — Uses the official `apache/airflow` image.
+- `Dockerfile` — Uses the official `apache/airflow` image and installs any packages listed in `requirements.txt`.
 - `docker-entrypoint.sh` — Starts Airflow in standalone mode on Railway `$PORT`.
 - `railway.toml` — Health check, restart policy, and required volume mount.
+- `requirements.txt` — Add extra PyPI packages your DAGs need here, then redeploy to rebuild the image.
 
 **Environment variables**
 
@@ -46,18 +47,36 @@ _AIRFLOW_WWW_USER_USERNAME=admin
 _AIRFLOW_WWW_USER_PASSWORD=replace-with-strong-password
 ```
 
+Setting `_AIRFLOW_WWW_USER_USERNAME` and `_AIRFLOW_WWW_USER_PASSWORD` seeds a fixed
+admin login for Airflow 3's SimpleAuthManager, and the entrypoint stores its
+password file on the persistent volume so the login survives restarts and
+redeploys instead of Airflow generating a new random password each time. If you
+leave these unset, Airflow auto-generates a random `admin` password on first boot
+and logs it once to stdout.
+
 **Persistent storage**
 
 Attach a Railway volume and mount it to:
 
 - `/opt/airflow/data`
 
-The template enforces this with `requiredMountPath` in `railway.toml`.
+The template enforces this with `requiredMountPath` in `railway.toml`. Task logs
+and the SimpleAuthManager credentials file are also stored there so they survive
+restarts and redeploys.
 
 **Notes**
 
 - Standalone mode is suited to evaluation and light workloads.
 - For production at scale, split webserver, scheduler, and workers, and use PostgreSQL with a Celery or Kubernetes executor.
+- SimpleAuthManager (Airflow 3's default auth manager, used by this template) is
+  intended by upstream for development, testing, and small teams — not full
+  RBAC/SSO. For production deployments that need that, switch
+  `AIRFLOW__CORE__AUTH_MANAGER` to the FAB auth manager or the Keycloak auth
+  manager (each requires adding its provider package to `requirements.txt`).
+- The health check hits `/api/v2/monitor/health`, Airflow 3's documented
+  monitoring endpoint. Railway only evaluates the HTTP status code, not the JSON
+  body's per-component detail, so a `200` confirms the API server is responding
+  but not that every component (e.g. the triggerer) is fully healthy.
 
 ## Why Deploy Apache Airflow on Railway?
 
