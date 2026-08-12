@@ -7,6 +7,18 @@
 
 Apache Airflow is an open-source platform for authoring, scheduling, and monitoring workflows as code. You define pipelines in Python (DAGs), and Airflow runs them on a schedule or on demand, with a web UI for logs, retries, and task dependencies. It is widely used for data engineering, ETL, and orchestrating jobs across databases, APIs, and cloud services.
 
+## 🏗️ Architecture
+
+```mermaid
+flowchart LR
+    Client(["🌐 Client"]) -->|HTTPS| Domain["Railway Public Domain"]
+    Domain -->|"$PORT"| Entry["railway-entrypoint.sh"]
+    Entry --> App["Container\napache/airflow (standalone mode)"]
+    App --> Volume[("Volume\n/opt/airflow/data")]
+```
+
+Single-process **standalone** mode: webserver and scheduler run together in one container.
+
 ## About Hosting Apache Airflow
 
 Hosting Airflow means running the webserver, scheduler, and—depending on your setup—workers and a metadata database. You configure environment variables for secrets and database connections, attach persistent storage for DAGs and state, and expose the web UI on a port your platform can route to. Health checks help the host restart unhealthy processes automatically. Production deployments often split components and use PostgreSQL with Celery or Kubernetes executors; this template uses **standalone** mode for a simpler single-process layout suited to evaluation and lighter workloads. Railway runs the container, wires networking and volumes, and lets you scale or add services as your orchestration needs grow.
