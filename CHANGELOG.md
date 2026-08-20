@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.1](https://github.com/vergissberlin/railwayapp-airflow/compare/railwayapp-airflow-v0.2.0...railwayapp-airflow-v0.2.1) (2026-08-20)
+
+
+### Bug Fixes
+
+* add missing MIT LICENSE file ([#13](https://github.com/vergissberlin/railwayapp-airflow/issues/13)) ([c200505](https://github.com/vergissberlin/railwayapp-airflow/commit/c20050569770d2582c7c99da282eff7bcbda9069))
+* align template with Airflow 3.3 auth, health check, and dependency conventions ([#10](https://github.com/vergissberlin/railwayapp-airflow/issues/10)) ([366e46d](https://github.com/vergissberlin/railwayapp-airflow/commit/366e46d6909551c7d8fc1b57526c26353b3a3fbc))
+
+
+### Documentation
+
+* add architecture diagram to README ([#12](https://github.com/vergissberlin/railwayapp-airflow/issues/12)) ([0e1bc4f](https://github.com/vergissberlin/railwayapp-airflow/commit/0e1bc4fe981d7a29d05b1cc93a11c0bf2d1e5481))
+* refresh shared template footer badges ([af9c6f7](https://github.com/vergissberlin/railwayapp-airflow/commit/af9c6f7c1045071fa69fccb7ccba11d95a0c03bd))
+
+
+### Chores
+
+* update shared template footer ([a39d28a](https://github.com/vergissberlin/railwayapp-airflow/commit/a39d28a91d5ea80af4b37fc4aaa368aae4624cdc))
+* update shared template footer ([f0c2551](https://github.com/vergissberlin/railwayapp-airflow/commit/f0c2551aea8a45a6e46148f0654d77e1f68ceb5e))
+
 ## [0.2.0](https://github.com/vergissberlin/railwayapp-airflow/compare/railwayapp-airflow-v0.1.0...railwayapp-airflow-v0.2.0) (2026-08-01)
 
 
