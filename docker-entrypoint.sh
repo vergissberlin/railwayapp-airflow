@@ -1,6 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Railway mounts requiredMountPath fresh and root-owned on first boot, which the unprivileged
+# airflow user (UID 50000) cannot write to (PermissionError on the passwords file / SQLite DB).
+# Start as root, fix ownership, then re-exec this script as airflow via setpriv (util-linux,
+# already in the Debian base image).
+if [[ "$(id -u)" == "0" ]]; then
+  mkdir -p /opt/airflow/data
+  chown -R 50000:0 /opt/airflow/data
+  export HOME=/home/airflow
+  exec setpriv --reuid=50000 --regid=0 --clear-groups "$0" "$@"
+fi
+
 export AIRFLOW__CORE__EXECUTOR="${AIRFLOW__CORE__EXECUTOR:-SequentialExecutor}"
 export AIRFLOW__DATABASE__SQL_ALCHEMY_CONN="${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:-sqlite:////opt/airflow/data/airflow.db}"
 export AIRFLOW__CORE__LOAD_EXAMPLES="${AIRFLOW__CORE__LOAD_EXAMPLES:-False}"

@@ -16,4 +16,6 @@ RUN pip install --no-cache-dir \
 
 COPY --chmod=0755 docker-entrypoint.sh /opt/airflow/railway-entrypoint.sh
 
+# Entrypoint starts as root only to chown the Railway volume, then drops to UID 50000.
+USER root
 ENTRYPOINT ["/opt/airflow/railway-entrypoint.sh"]
