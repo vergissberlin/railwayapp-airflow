@@ -12,7 +12,9 @@ if [[ "$(id -u)" == "0" ]]; then
   exec setpriv --reuid=50000 --regid=0 --clear-groups "$0" "$@"
 fi
 
-export AIRFLOW__CORE__EXECUTOR="${AIRFLOW__CORE__EXECUTOR:-SequentialExecutor}"
+# Airflow 3 removed SequentialExecutor. LocalExecutor supports the standalone
+# SQLite database using WAL mode.
+export AIRFLOW__CORE__EXECUTOR="${AIRFLOW__CORE__EXECUTOR:-LocalExecutor}"
 export AIRFLOW__DATABASE__SQL_ALCHEMY_CONN="${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:-sqlite:////opt/airflow/data/airflow.db}"
 export AIRFLOW__CORE__LOAD_EXAMPLES="${AIRFLOW__CORE__LOAD_EXAMPLES:-False}"
 

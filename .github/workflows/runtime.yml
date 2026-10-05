@@ -1,0 +1,48 @@
+name: Runtime checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: runtime-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  airflow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify entrypoint configuration
+        run: node --test tests/entrypoint.test.mjs
+      - name: Build standalone image
+        run: docker build -t railwayapp-airflow:test .
+      - name: Verify first boot and restart on a root-owned data volume
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          printf 'PORT=8096\n_AIRFLOW_WWW_USER_USERNAME=admin\n_AIRFLOW_WWW_USER_PASSWORD=%s\n' "$(openssl rand -hex 16)" > /tmp/airflow-test.env
+          docker volume create airflow-runtime-data
+          trap 'docker logs airflow-runtime-test --tail 100 || true; docker rm -f airflow-runtime-test || true; docker volume rm airflow-runtime-data || true; rm -f /tmp/airflow-test.env' EXIT
+          docker run -d --name airflow-runtime-test --env-file /tmp/airflow-test.env -v airflow-runtime-data:/opt/airflow/data -p 127.0.0.1:18096:8096 railwayapp-airflow:test
+          wait_for_health() {
+            for attempt in $(seq 1 120); do
+              if curl -fsS --max-time 5 http://127.0.0.1:18096/api/v2/monitor/health > /tmp/airflow-health.json && python3 -c 'import json; d=json.load(open("/tmp/airflow-health.json")); assert d["metadatabase"]["status"] == "healthy"; assert d["scheduler"]["status"] == "healthy"'; then
+                return 0
+              fi
+              if [ "$(docker inspect --format '{{.State.Running}}' airflow-runtime-test)" != true ]; then
+                return 1
+              fi
+              sleep 5
+            done
+            return 1
+          }
+          wait_for_health
+          docker exec airflow-runtime-test test -s /opt/airflow/data/simple_auth_manager_passwords.json.generated
+          docker restart airflow-runtime-test
+          wait_for_health
