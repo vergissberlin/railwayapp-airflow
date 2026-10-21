@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/vergissberlin/railwayapp-airflow/compare/railwayapp-airflow-v0.2.1...railwayapp-airflow-v0.2.2) (2026-10-21)
+
+
+### Documentation
+
+* document minimum RAM for the standalone template ([#14](https://github.com/vergissberlin/railwayapp-airflow/issues/14)) ([c63d262](https://github.com/vergissberlin/railwayapp-airflow/commit/c63d262906baa395f659573ce0c3f9021161169c))
+
 ## [0.2.1](https://github.com/vergissberlin/railwayapp-airflow/compare/railwayapp-airflow-v0.2.0...railwayapp-airflow-v0.2.1) (2026-10-06)
 
 
