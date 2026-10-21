@@ -19,6 +19,10 @@ flowchart LR
 
 Single-process **standalone** mode: webserver and scheduler run together in one container.
 
+## Resource requirements
+
+This template runs `airflow standalone` (API server, scheduler, DAG processor and triggerer) in a single container with SQLite on the volume. Plan for **at least 2 GB RAM (4 GB recommended)** and 1-2 vCPU; with less memory the container is OOM-killed during startup and the healthcheck at `/api/v2/monitor/health` never passes. SQLite is for evaluation only: for production, add a PostgreSQL service and set `AIRFLOW__DATABASE__SQL_ALCHEMY_CONN`.
+
 ## About Hosting Apache Airflow
 
 Airflow 3 uses `LocalExecutor` with SQLite WAL mode for this standalone evaluation setup. `SequentialExecutor` was removed in Airflow 3 and must not be configured. The published template mounts `/opt/airflow/data`, generates an HTTP domain, and seeds the administrator login using a generated password.
