@@ -1,5 +1,8 @@
 # Deploy and Host Apache Airflow on Railway
 
+> [!IMPORTANT]
+> **Requires at least 2 GB RAM (4 GB recommended).** Airflow standalone runs the API server, scheduler, DAG processor and triggerer in one container. On Railway's Free or Trial plan the container is OOM-killed during startup and the deploy fails. Use the **Hobby or Pro plan**. Details: [Resource requirements](#resource-requirements).
+
 ![Template Header](./template-header.svg)
 
 
