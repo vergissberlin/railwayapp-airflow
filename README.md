@@ -3,7 +3,7 @@
 ![Template Header](./template-header.svg)
 
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/9jXQaO?referralCode=2_sIT9&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/apache-airflow?referralCode=2_sIT9&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
 Apache Airflow is an open-source platform for authoring, scheduling, and monitoring workflows as code. You define pipelines in Python (DAGs), and Airflow runs them on a schedule or on demand, with a web UI for logs, retries, and task dependencies. It is widely used for data engineering, ETL, and orchestrating jobs across databases, APIs, and cloud services.
 
