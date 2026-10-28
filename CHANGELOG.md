@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.3](https://github.com/vergissberlin/railwayapp-airflow/compare/railwayapp-airflow-v0.2.2...railwayapp-airflow-v0.2.3) (2026-10-28)
+
+
+### Bug Fixes
+
+* show RAM minimum prominently at the top of the README ([#18](https://github.com/vergissberlin/railwayapp-airflow/issues/18)) ([709f6c7](https://github.com/vergissberlin/railwayapp-airflow/commit/709f6c7dcd7f1138344c321ad17e99d887579a92))
+
+
+### Documentation
+
+* fix Railway deploy button link and add template forum link ([#16](https://github.com/vergissberlin/railwayapp-airflow/issues/16)) ([476a1bf](https://github.com/vergissberlin/railwayapp-airflow/commit/476a1bfb63fcb33050e99b67b2bdaaf8cc7d8d5e))
+
 ## [0.2.2](https://github.com/vergissberlin/railwayapp-airflow/compare/railwayapp-airflow-v0.2.1...railwayapp-airflow-v0.2.2) (2026-10-21)
 
 
