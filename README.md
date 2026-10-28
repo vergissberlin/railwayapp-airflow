@@ -3,7 +3,7 @@
 ![Template Header](./template-header.svg)
 
 
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/9jXQaO?referralCode=2_sIT9&utm_medium=integration&utm_source=template&utm_campaign=generic)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/apache-airflow?referralCode=2_sIT9&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
 Apache Airflow is an open-source platform for authoring, scheduling, and monitoring workflows as code. You define pipelines in Python (DAGs), and Airflow runs them on a schedule or on demand, with a web UI for logs, retries, and task dependencies. It is widely used for data engineering, ETL, and orchestrating jobs across databases, APIs, and cloud services.
 
@@ -103,6 +103,10 @@ Railway is a singular platform to deploy your infrastructure stack. Railway will
 
 By deploying Apache Airflow on Railway, you are one step closer to supporting a complete full-stack application with minimal burden. Host your servers, databases, AI agents, and more on Railway.
 <!-- End recommended section -->
+
+## 💬 Support
+
+Questions or feedback? Visit the [template forum on Railway Central Station](https://station.railway.com/templates/apache-airflow-ce4a3f7b).
 
 <!-- footer -->
 ---
